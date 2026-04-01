@@ -1,0 +1,146 @@
+/* style.css - DESIGN REFINADO MARIANA TECIDOS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* --- Configurações Globais e Fundo --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    /* Centralização total com Flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    /* Imagem de Fundo */
+    background-image: url('Mariana\ Tecidos\ interior.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    /* Camada de cor para contraste */
+    background-color: rgba(0, 0, 0, 0.35); 
+    background-blend-mode: multiply;
+}
+
+/* --- Container Principal (Efeito Glassmorphism) --- */
+.container {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 45px;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* --- Tipografia e Logo --- */
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #0000FF; /* Azul Vibrante Mariana */
+    font-size: 26px;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+p { 
+    color: #666;
+    font-size: 16px; 
+    margin: 0 0 35px 0;
+}
+
+/* --- Sistema de Estrelas (Interativo) --- */
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.stars input { 
+    display: none; 
+}
+
+.stars label {
+    font-size: 55px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.15s;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Animações das Estrelas */
+.stars label:hover,
+.stars label:hover ~ label {
+    color: #FFD700; /* Amarelo Ouro */
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.stars input:checked ~ label {
+    color: #FFD700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+/* --- Inputs e Textarea --- */
+select, 
+textarea {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    border: 2px solid #eee;
+    border-radius: 14px;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:focus, 
+textarea:focus { 
+    border-color: #0000FF;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* --- Botão de Ação --- */
+button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #0000FF 0%, #000080 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 255, 0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 0, 255, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}

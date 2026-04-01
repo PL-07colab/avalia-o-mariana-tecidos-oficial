@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Atendimento - Mariana Tecidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <img src="Logo Mariana Tecidos.jpg" alt="Mariana Tecidos & Malhas" class="logo">
+
+        <h1>Avaliação de Atendimento</h1>
+        <p>Sua opinião é importante para melhor lhe atendermos!</p>
+
+        <form id="evaluationForm">
+            <label for="vendedora" class="label-vendedora">
+                Selecione o colaborador(a) responsável pelo seu atendimento:
+            </label>
+            
+            <select id="vendedora" required>
+                <option value="" disabled selected>Selecione...</option>
+                <option value="Amanda">Amanda</option>
+                <option value="Ana Clara">Ana Clara</option>
+                <option value="Camilo">Camilo</option>
+                <option value="Carlos">Carlos</option>
+                <option value="Cassia">Cassia</option>
+                <option value="Cinthia">Cinthia</option>
+                <option value="Evillen">Evillen</option>
+                <option value="Jaqueline">Jaqueline</option>
+                <option value="Jane">Jane</option>
+                <option value="Josyelma">Josyelma</option>
+                <option value="Larissa">Larissa</option>
+                <option value="Luiza">Luiza</option>
+                <option value="Marcia">Marcia</option>
+                <option value="Monica">Monica</option>
+                <option value="Suelaine">Suelaine</option>
+            </select>
+
+            <div class="stars">
+                <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+                <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+                <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="star" id="star1" value="1" required><label for="star1">★</label>
+            </div>
+
+            <textarea id="comentario" placeholder="Conte-nos o que achou (opcional)..."></textarea>
+
+            <button type="submit">Enviar Avaliação</button>
+        </form>
+
+        <div id="thanksMessage" style="display: none; text-align: center;">
+            <h2 style="color: #102d8f;">Muito obrigado!</h2>
+            <p>Sua avaliação foi recebida com sucesso. A Mariana Tecidos agradece a sua preferência!</p>
+            <button onclick="window.location.reload()" style="margin-top: 20px;">Nova Avaliação</button>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
