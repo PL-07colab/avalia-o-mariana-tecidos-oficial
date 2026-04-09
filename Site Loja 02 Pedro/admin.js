@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, query, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBWRu18Brpzxdv3_t7TggwQ6Dw3iSm7F5c",
@@ -12,34 +13,41 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-// LÓGICA DE ACESSO COM O NOVO MODAL
-const SENHA_MESTRE = "Mariana1328"; 
+const EMAIL_ADM = "admin2864@gmail.com"; 
+
 const modal = document.getElementById('modalSenha');
 const painel = document.getElementById('conteudoPainel');
 const inputSenha = document.getElementById('inputSenhaMestre');
 const btnEntrar = document.getElementById('btnVerificarSenha');
-
-btnEntrar.addEventListener('click', () => {
-    if (inputSenha.value === SENHA_MESTRE) {
-        modal.style.display = 'none'; // Esconde o modal
-        painel.style.display = 'block'; // Mostra o painel
-        carregarDados(); // Carrega os dados do Firebase
-    } else {
-        alert("Senha incorreta!");
-        inputSenha.value = "";
-    }
-});
-
-// Permitir dar "Enter" no campo de senha
-inputSenha.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') btnEntrar.click();
-});
-
 const tabelaCorpo = document.getElementById('tabelaCorpo');
 const filtroVendedora = document.getElementById('filtroVendedora');
 const filtroData = document.getElementById('filtroData');
 const totalSpan = document.getElementById('totalAvaliacoes');
+
+btnEntrar.addEventListener('click', async () => {
+    const senhaDigitada = inputSenha.value;
+    btnEntrar.innerText = "Verificando...";
+    btnEntrar.disabled = true;
+
+    try {
+        await signInWithEmailAndPassword(auth, EMAIL_ADM, senhaDigitada);
+        modal.style.display = 'none';
+        painel.style.display = 'block';
+        carregarDados();
+    } catch (error) {
+        alert("Acesso Negado: Senha incorreta.");
+        inputSenha.value = "";
+    } finally {
+        btnEntrar.innerText = "Entrar";
+        btnEntrar.disabled = false;
+    }
+});
+
+inputSenha.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') btnEntrar.click();
+});
 
 async function carregarDados() {
     const vendedoraSel = filtroVendedora.value;
@@ -74,8 +82,7 @@ async function carregarDados() {
         });
         totalSpan.innerText = totalContado;
     } catch (error) {
-        console.error(error);
-        tabelaCorpo.innerHTML = "<tr><td colspan='4'>Erro. Verifique as Regras no Firebase.</td></tr>";
+        tabelaCorpo.innerHTML = "<tr><td colspan='4'>Erro de permissão.</td></tr>";
     }
 }
 
