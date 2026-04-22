@@ -23,7 +23,8 @@ const inputSenha = document.getElementById('inputSenhaMestre');
 const btnEntrar = document.getElementById('btnVerificarSenha');
 const tabelaCorpo = document.getElementById('tabelaCorpo');
 const filtroVendedora = document.getElementById('filtroVendedora');
-const filtroData = document.getElementById('filtroData');
+const filtroDataInicio = document.getElementById('filtroDataInicio');
+const filtroDataFim = document.getElementById('filtroDataFim');
 const totalSpan = document.getElementById('totalAvaliacoes');
 
 btnEntrar.addEventListener('click', async () => {
@@ -51,7 +52,9 @@ inputSenha.addEventListener('keypress', (e) => {
 
 async function carregarDados() {
     const vendedoraSel = filtroVendedora.value;
-    const dataSel = filtroData.value;
+    const dataInicio = filtroDataInicio.value; // Formato yyyy-mm-dd
+    const dataFim = filtroDataFim.value;       // Formato yyyy-mm-dd
+    
     tabelaCorpo.innerHTML = "<tr><td colspan='4'>Buscando dados...</td></tr>";
     
     try {
@@ -62,11 +65,17 @@ async function carregarDados() {
 
         querySnapshot.forEach((doc) => {
             const dados = doc.data();
+            
+            // Tratamento da data: converte "DD/MM/YYYY" para "YYYY-MM-DD" para comparação
             const partesData = dados.data_envio.split(',')[0].trim().split('/');
             const dataBancoISO = `${partesData[2]}-${partesData[1]}-${partesData[0]}`;
 
             const bateVendedora = (vendedoraSel === "todos" || dados.vendedora === vendedoraSel);
-            const bateData = (dataSel === "" || dataBancoISO === dataSel);
+            
+            // Lógica de filtragem por período
+            let bateData = true;
+            if (dataInicio && dataBancoISO < dataInicio) bateData = false;
+            if (dataFim && dataBancoISO > dataFim) bateData = false;
 
             if (bateVendedora && bateData) {
                 totalContado++;
@@ -82,14 +91,19 @@ async function carregarDados() {
         });
         totalSpan.innerText = totalContado;
     } catch (error) {
-        tabelaCorpo.innerHTML = "<tr><td colspan='4'>Erro de permissão.</td></tr>";
+        console.error("Erro ao carregar:", error);
+        tabelaCorpo.innerHTML = "<tr><td colspan='4'>Erro de permissão ou conexão.</td></tr>";
     }
 }
 
+// Event Listeners
 filtroVendedora.addEventListener('change', carregarDados);
-filtroData.addEventListener('change', carregarDados);
+filtroDataInicio.addEventListener('change', carregarDados);
+filtroDataFim.addEventListener('change', carregarDados);
+
 document.getElementById('btnLimpar').addEventListener('click', () => {
     filtroVendedora.value = "todos";
-    filtroData.value = "";
+    filtroDataInicio.value = "";
+    filtroDataFim.value = "";
     carregarDados();
 });
